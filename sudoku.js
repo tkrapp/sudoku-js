@@ -192,7 +192,7 @@ export function* solve(game, start_at) {
         }
 
         let x = position % ROW_SIZE;
-        let y = Math.floor(position % ROW_SIZE);
+        let y = Math.floor(position / ROW_SIZE);
         let candidates = Array.from(get_candidates(game, x, y));
 
         if (candidates.length === 0) {
@@ -201,18 +201,14 @@ export function* solve(game, start_at) {
 
         for (let candidate of candidates) {
             let new_game = game.slice(0, position) + candidate + game.slice(position + 1);
-
-            for (let solution of solve(new_game, position + 1)) {
-                console.log(new_game);
+            for (let solution of solve(new_game)) {
                 yield solution;
             }
         }
 
-        console.log(game);
         return;
     }
 
-    console.log(game);
     if (is_complete(game)) {
         yield game;
     }
