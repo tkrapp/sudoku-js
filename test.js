@@ -237,14 +237,30 @@ describe("Sudoku", function () {
             "625987143138452976497613852954378261816245739372169485783591624541826397269734518",
             "625987143138452976497613852954378261816245739372169485783591624549826317261734598",
         ]);
+        const NO_SOLUTION_GAME = (
+            "6..98...." +
+            "13......." +
+            ".976..8.." +
+            // --------
+            ".5....2.." +
+            "8.62.57.9" +
+            "..2....8." +
+            // --------
+            "..3..162." +
+            "......397" +
+            "....344.8"
+        );
 
-        it("should return 1 solution (easy)", function () {
+        it("should return no solution", function () {
+            chai.expect(Array.from(solve(NO_SOLUTION_GAME))).to.eql([]);
+        });
+        it("should return one solution (easy)", function () {
             chai.expect(Array.from(solve(EASY_GAME))).to.eql(SOLUTION);
         });
-        it("should return 1 solution (medium)", function () {
+        it("should return one solution (medium)", function () {
             chai.expect(Array.from(solve(MEDIUM_GAME))).to.eql(SOLUTION);
         });
-        it("should return 6 solutions (medium)", function () {
+        it("should return six solutions (medium)", function () {
             let result = new Set(solve(SIX_SOLUTIONS_GAME));
             chai.expect(result).to.eql(SIX_SOLUTIONS);
         })
