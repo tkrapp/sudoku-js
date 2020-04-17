@@ -1,5 +1,5 @@
 {
-    "name": "@t.krapp/sudoku",
+    "name": "@t.krapp/sudoku-js",
     "version": "1.0.2",
     "description": "A simple sudoku solver",
     "main": "sudoku.js",
