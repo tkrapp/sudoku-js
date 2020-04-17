@@ -33,7 +33,7 @@ function* range(start, stop, step) {
  * @returns {string}
  */
 export function get_row(game, row_number) {
-    return game.slice(row_number * ROW_SIZE, row_number * ROW_SIZE + ROW_SIZE)
+    return game.slice(row_number * ROW_SIZE, row_number * ROW_SIZE + ROW_SIZE);
 }
 
 /**
@@ -108,10 +108,10 @@ export function* iter_squares(game) {
  */
 export function is_complete(game) {
     return (
-        Array.from(iter_rows(game)).every(check_item)
-        && Array.from(iter_cols(game)).every(check_item)
-        && Array.from(iter_squares(game)).every(check_item)
-    )
+        Array.from(iter_rows(game)).every(check_item) &&
+        Array.from(iter_cols(game)).every(check_item) &&
+        Array.from(iter_squares(game)).every(check_item)
+    );
 }
 
 /**
@@ -151,10 +151,14 @@ export function get_candidates(game, x, y) {
 }
 
 /**
- * TODO
+ * Class to signal an error when a row, column or square is invalid.
  */
 export class ItemError extends Error {
-    name = "ItemError"
+    constructor(message) {
+        super(message);
+
+        this.name = "ItemError";
+    }
 }
 /**
  * Check if all numbers are in an item
@@ -211,5 +215,49 @@ export function* solve(game, start_at) {
 
     if (is_complete(game)) {
         yield game;
+    }
+}
+
+/**
+ * Return all possible solutions for a given game of sudoku. Iteratively
+ *
+ * @param {string} game - The initial game
+ * @param {number} [startAt=0] - The position to start from
+ * @yields {string}
+ */
+export function* solve_iter(game, start_at) {
+    const GAME_LEN = game.length;
+    let state = [[game, start_at]];
+
+    while (state.length > 0) {
+        [game, start_at] = state.pop();
+
+        for (let position = start_at || 0; position < GAME_LEN; position += 1) {
+            let num = game[position];
+
+            if (POSSIBLE_NUMBERS_SET.has(num)) {
+                continue;
+            }
+
+            let x = position % ROW_SIZE;
+            let y = Math.floor(position / ROW_SIZE);
+            let candidates = Array.from(get_candidates(game, x, y));
+
+            if (candidates.length === 0) {
+                break;
+            }
+
+            for (let candidate of candidates) {
+                let new_game = game.slice(0, position) + candidate + game.slice(position + 1);
+
+                state.push([new_game, position]);
+            }
+
+            break;
+        }
+
+        if (is_complete(game)) {
+            yield game;
+        }
     }
 }

@@ -1,8 +1,8 @@
 {
-    "name": "sudoku",
-    "version": "1.0.0",
-    "description": "A sudoku solver written in JavaScript",
-    "main": "index.js",
+    "name": "@t.krapp/sudoku",
+    "version": "1.0.2",
+    "description": "A simple sudoku solver",
+    "main": "sudoku.js",
     "scripts": {
         "test": "mocha"
     },
@@ -17,7 +17,7 @@
         "solving"
     ],
     "author": "Thomas Krapp",
-    "license": "SEE LICENSE IN LICENSE",
+    "license": "GPL-3.0-or-later",
     "bugs": {
         "url": "https://github.com/tkrapp/sudoku-js/issues"
     },
@@ -25,6 +25,7 @@
     "type": "module",
     "devDependencies": {
         "chai": "^4.2.0",
-        "mocha": "^7.1.1"
+        "mocha": "^7.1.1",
+        "partial": "0.0.7"
     }
 }
