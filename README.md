@@ -1,10 +1,10 @@
-# @t.krap/sudoku
+# @t.krap/sudoku-js
 A simple Sudoku solver.
 
 ## Usage
 
 ```javascript
-import { solve } from "@t.krap/sudoku";
+import { solve } from "@t.krap/sudoku-js";
 
 // solve a game
 const INCOMPLETE_GAME = (
